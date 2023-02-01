@@ -1,0 +1,48 @@
+package com.aca.wzstats.controller;
+
+import java.util.List;
+
+import com.aca.wzstats.model.Stats;
+import com.aca.wzstats.service.StatsService;
+
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+
+@Path("/stats")
+public class StatsController {
+
+	private StatsService service = new StatsService();
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Stats> getPlayerStats() {
+		return service.getPlayersStats();
+	}
+
+	@GET
+	@Path("/{playerIdValue}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Stats> getPlayerById(@PathParam("playerIdValue") Integer playerId) {
+		return service.getPlayersById(playerId);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Stats newPlayerStats(Stats newPlayer) {
+		return service.newPlayerStats(newPlayer);
+	}
+
+	@DELETE
+	@Path("/{playerIdValue}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Stats deletePlayerById(@PathParam("playerIdValue") Integer playerId) {
+		return service.deletePlayerById(playerId);
+	}
+}
